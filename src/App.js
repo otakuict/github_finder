@@ -9,6 +9,7 @@ import axios from "axios";
 import Alert from "./components/layout/Alert";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import About from "./components/pages/About";
+import GithubState from "./context/github/githubState";
 
 const App = ()=> {
  const [users,setUsers] = useState([])
@@ -19,20 +20,7 @@ const App = ()=> {
  
 
   //search
-  const searchUsers = async (text) => {
-    setLoading(true)
-   
-    const res =
-      await axios.get(`https://api.github.com/search/users?q=${text}&lient_id=
-  ${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=
-  ${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-   
-    setUsers(res.data.items);
-    setLoading(false);
-    // console.log(res.data.items)
-    // console.log(res.data)
-  };
-
+ 
   //set Alet
   const showAlert = (msg, type) => {
    
@@ -73,6 +61,7 @@ const App = ()=> {
  
     
     return (
+      <GithubState>
       <Router>
         <div className="App">
           <Navbar />
@@ -82,7 +71,7 @@ const App = ()=> {
               <Route
                 exact path="/" element={
                   <Fragment>
-                    <Search searchUsers={searchUsers} setAlert={showAlert}/>
+                    <Search  setAlert={showAlert}/>
                     <Users loading={loading}  users={users} />
                   </Fragment>
                 }
@@ -94,6 +83,7 @@ const App = ()=> {
           </div>
         </div>
       </Router>
+      </GithubState>
     );
   
 }
