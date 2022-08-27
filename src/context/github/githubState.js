@@ -13,16 +13,19 @@ import { SEARCH_USERS,
 
 let githubClientId;
 let githubClientSecret;
-
+console.log("this is a"+process.env.NODE_ENV)
 if(process.env.NODE_ENV !== 'production'){
+    console.log("LOCAL")
     githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID
     githubClientSecret =  process.env.REACT_APP_GITHUB_CLIENT_SECRET
 }else {
+    console.log("PROD")
     githubClientId = process.env.GITHUB_CLIENT_ID
     githubClientSecret =  process.env.GITHUB_CLIENT_SECRET
 }
 
 const GithubState = (props) => {
+    console.log("clientID"+githubClientId)
     const initialState = {
         users:[],
         user:{},
